@@ -1,0 +1,9 @@
+__pycache__
+*.pyc
+.DS_Store
+.ipynb_checkpoints
+/*.ipynb
+*.pkl
+*.h5
+census_models/
+cifar_models/
