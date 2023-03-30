@@ -126,7 +126,11 @@ class ShapleySampler(Layer):
         num_included = tf.transpose(num_included, [1,0])
         
         S = tf.gather_nd(self.ones_matrix, num_included)
-        S = tf.map_fn(tf.random.shuffle, S)
+
+        # S = tf.map_fn(tf.random.shuffle, S)
+        # To avoid using `tf.map_fn` method which could make execution (training) time much slower.
+        # See: https://github.com/tensorflow/tensorflow/issues/24774
+        S = tf.transpose(tf.random.shuffle(tf.transpose(S)))
         
         # Uniformly sample features of subset size
         S = tf.reshape(S, [batch_size, self.num_samples, self.num_features])
